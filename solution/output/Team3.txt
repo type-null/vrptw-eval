@@ -1,0 +1,9 @@
+
+Part 1:
+Total cost = 14343.70678135984
+
+Part 2:
+Total cost = 14592.312903778256
+
+Part 3:
+Total cost = 12258.448386704284

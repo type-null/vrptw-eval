@@ -1,0 +1,14 @@
+
+Part 1:
+Total cost = 13943.793704094296
+
+Part 2:
+Truck 8 can't make it to customer 27 on assumed time
+Total cost = 17740.157313368505
+
+Part 3:
+Truck 3 can't make it to customer 48 on assumed time
+Truck 4 can't make it to customer 27 on assumed time
+Truck 18 can't make it to customer 10 on assumed time
+Truck 19 can't make it to customer 19 on assumed time
+Total cost = 14736.14286094292
