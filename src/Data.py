@@ -28,6 +28,8 @@ class Data:
         self.gas_price = 3
 
         self.report = ""
+        # time precisioin tolerance
+        self._time_tol = 0
 
     def read(self, file):
         df = pd.read_csv(file)
@@ -59,6 +61,7 @@ class Data:
             self.trucks.append(truck)
             if truck.__str__() != "":
                 self.report += truck.__str__()
+        self.adjust_start_time()
 
         if len(self.trucks) > 20:
             self.report += f"Too many trucks: {len(self.trucks)} {[t._name for t in self.trucks]}\n"
@@ -98,16 +101,25 @@ class Data:
                         truck._starts[i - 1]
                         + last_c._service_time
                         + timedelta(
-                            minutes=self.distance_between(c._name, last_c._name) - 1e-1
+                            minutes=self.distance_between(c._name, last_c._name) - self._time_tol
                         )
                     ):
-                        self.report += f"Truck {truck._name} can't make it to customer {c._name} on assumed time\n"
+                        self.report += f"Truck {truck._name} can't make it to customer {c._name} on assumed time {start.strftime("%H:%M")}\n"
 
     def reset(self):
         for c in self.customers:
             c.reset()
         self.trucks = []
         self.cost = 0
+
+    def adjust_start_time(self):
+        for t in self.trucks:
+            for i, start in enumerate(t._starts):
+                cid = self.customerID[t._stops[i+1]]
+                c_start = self.customers[cid]._service_start
+                if start < c_start:
+                    t._starts[i] = c_start
+                    # print(f"Truck {t._name} arrives at {self.customers[cid]._name} at {start} but starts at {c_start}")
 
     def calc_distance(self, truck):
         d = 0
@@ -118,6 +130,7 @@ class Data:
             else:
                 last = cid
         truck.set_distance(d)
+        # self.report += f"Truck {truck._name} traveled {truck._distance} miles result in ${truck._distance * self.gas_price + self.truck_rent}\n"
 
     def distance_between(self, cname1, cname2):
         x1, y1 = self.get_coord(cname1)

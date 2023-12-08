@@ -18,7 +18,7 @@ class Customer:
         self._demand = float(row["Demand (pounds)"])
         time = datetime.strptime(row["Service-time"], "%H:%M").time()
         self._service_time = timedelta(hours=time.hour, minutes=time.minute)
-        # self._service_start = datetime.strptime(row["Time-window(start; h:m)"], "%H:%M").time()
+        self._service_start = dateit(row["Time-window(start; h:m)"])
         self._service_end = dateit(row["Time-window(end; h:m)"])
         self._latest_start = self._service_end - self._service_time
         self._splitable = True if row["Can this demand be split"] == "Y" else False

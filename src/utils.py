@@ -21,6 +21,6 @@ def dateit(s):
 
 
 def min2time(f):
-    hour = int(f // 60)
-    min = int(f % 60)
-    return datetime(2000, 1, 1, hour=hour, minute=min, second=0)
+    hour, remainder = divmod(f * 60, 3600)
+    min, sec = divmod(remainder, 60)
+    return datetime(2000, 1, 1, hour=int(hour), minute=int(min), second=int(sec))
