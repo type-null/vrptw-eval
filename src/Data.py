@@ -29,7 +29,7 @@ class Data:
 
         self.report = ""
         # time precisioin tolerance
-        self._time_tol = 0
+        self._time_tol = 3
 
     def read(self, file):
         df = pd.read_csv(file)
